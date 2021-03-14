@@ -2,11 +2,13 @@ const Sequelize = require('sequelize');
 const db = require('../config/database');
 
 
-const Post = db.define('post', {
-    userId: {
-        type: Sequelize.STRING,
+const Post = sequelize.define('Post', {
+    id: {
+        type: Sequelize.INTEGER(11),
         allowNull: false,
-        unique: true
+        unique: true,
+        primaryKey: true,
+        autoIncrement: true
 
     },
     title: {
@@ -21,14 +23,10 @@ const Post = db.define('post', {
         type: Sequelize.STRING,
         allowNull: true,
     },
-    videoUrl: {
-        type: Sequelize.STRING,
-        allowNull: true,
+    userId: {
+        type: Sequelize.INTEGER(11),
+        allowNull: false
     },
-    gifUrl: {
-        type: Sequelize.STRING,
-        allowNull: true,
-    }
 
 })
 

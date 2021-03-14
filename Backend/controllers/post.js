@@ -2,14 +2,15 @@ const Post = require('../models/Post');
 const fs = require('fs');
 
 
+
 // // CREATION DE POST // // 
 
 exports.createPost = (req, res, next) => {
+
     const postObject = JSON.parse(req.body.post);
     const post = new Post({
         ...postObject,
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-
+        userId: req["userId"]
 
     });
     post.save()
@@ -39,25 +40,44 @@ exports.modifyPost = (req, res, next) => {
 // // SUPPRESSION DE POST // // 
 
 exports.deletePost = (req, res, next) => {
-    Post.findOne({ _id: req.params.id })
-        .then(sauce => {
-            const filename = post.imageUrl.split('/images/')[1];
-            fs.unlink(`images/${filename}`, () => {
-                Post.deleteOne({ _id: req.params.id })
-                    .then(() => res.status(201).json({ message: "Post supprimer" }))
-                    .catch(error => res.status(404).json({ error }))
-
-            });
+    Post.findOne({
+        where: {
 
 
+            id: req.params.id
+        }
+
+    })
+
+
+    .then((Post) => {
+        console.log("tets")
+        Post.deleteOne({
+            where: {
+                id: req.params.id,
+
+            }
         })
+
+        console.log(error)
+            .then(() => res.status(201).json({ message: "objet supprimer" }))
+            .catch(error => res.status(404).json(error))
+
+    })
+
+    .catch(error => res.status(404).json({ error }))
+
 }
 
 
 // // RECUPERATION D'UN  POST UNIQUE // //
 
 exports.getOnePost = (req, res, next) => {
-    Post.findOne({ _id: req.params.id })
+    Post.findOne({
+            where: {
+                id: req.params.id
+            }
+        })
         .then(post => res.status(200).json(post))
         .catch(error => res.status(404).json({ error }))
 }
@@ -65,7 +85,7 @@ exports.getOnePost = (req, res, next) => {
 // // RECUPERATION DE TOUT  POST UNIQUE // //
 
 exports.getAllPost = (req, res, next) => {
-    Post.find()
+    Post.findAll()
         .then(posts => res.status(200).json(posts))
-        .catch(error => res.status(404).json({ error }))
-}
+        .catch(error => res.status(404).json({ error }));
+};

@@ -1,6 +1,6 @@
 // // COONEXTION A LA BASSE SQL VIA SEQUELIZE // //
 const Sequelize = require('Sequelize');
-module.exports = new Sequelize('groupomania', "root", "rootmdp", {
+const sequelize = new Sequelize('groupomania', "root", "rootmdp", {
     host: 'localhost',
     dialect: "mysql",
     operatorsAliases: false,
@@ -13,3 +13,6 @@ module.exports = new Sequelize('groupomania', "root", "rootmdp", {
         idle: 10000
     },
 });
+
+module.exports = sequelize
+global.sequelize = sequelize
