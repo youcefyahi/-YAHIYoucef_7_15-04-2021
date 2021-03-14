@@ -83,7 +83,7 @@ export default {
         }
       
     },
-    methods:{
+    methods:{           
         submitForm(){
             let newUser ={
                
@@ -102,7 +102,8 @@ export default {
            axios.post('http://localhost:3000/api/auth/signup',newUser)
             .then(res =>{
                 console.log(res.config.data)
-                sessionStorage.setItem('userConnected',res.config.data)
+               sessionStorage.setItem('userConnected',res.config.data)
+             localStorage.setItem('userToken', res.data.token)
                 this.$router.push('/main')
             }, err =>{
                 console.log(err.response)

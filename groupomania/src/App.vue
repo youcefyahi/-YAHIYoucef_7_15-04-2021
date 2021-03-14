@@ -2,7 +2,7 @@
   <div id="app">
     <div id="nav">
         <router-link to="/signup">signup.vue</router-link>|
-      <router-link to="/">Home</router-link> |
+     
       <router-link to="/about">About</router-link>|
       <router-link to="/testApi">testApi</router-link>|
        <router-link to="/main">Main</router-link>|

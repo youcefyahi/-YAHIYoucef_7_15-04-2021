@@ -2,11 +2,11 @@
     <div class="addPost">
       <form @submit.prevent="createPost">
           <label>TITRE (obligatoire)</label><br>
-          <input type="text"><br>
+          <input type="text" v-model="title"><br>
           <label>Text</label><br>
-          <input type="text"><br>
+          <input type="text" v-model="content"><br>
           <label>Image a uploader</label><br>
-          <input type="text"><br>
+          <input type="text" v-model="imageUrl"><br>
             <button>POSTER</button>
       </form>
     </div>
@@ -32,9 +32,16 @@ export default {
                 content:this.content,
                 imageUrl:this.imageUrl
             }
-           console.log(newPost)
-           axios.post('http://localhost:3000/api/posts',newPost)
+           console.log(localStorage.getItem("userToken"))
+           
+           
+           axios.post('http://localhost:3000/api/posts', {post:JSON.stringify(newPost)},{
+               headers:{
+                   authorization:'Bearer ' + localStorage.getItem('userToken')
+               }
+           })
             .then(res =>{
+                console.log("truc")
                 console.log(res.config.data)
                 alert('post crée')
                 this.$router.push('/main')

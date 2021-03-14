@@ -1,5 +1,5 @@
 <template>
-    <div class="testvuelidate">
+    <div class="login">
         <img src="../assets/icon-above-font.png" alt="Logo groupomania"/>
         <form @submit.prevent="loginForm">
            <label>Votre email</label><br>
@@ -16,7 +16,7 @@
 <style lang="scss">
 body{
     /*! minireset.css v0.0.6 | MIT License | github.com/jgthms/minireset.css */html,body,p,ol,ul,li,dl,dt,dd,blockquote,figure,fieldset,legend,textarea,pre,iframe,hr,h1,h2,h3,h4,h5,h6{margin:0;padding:0}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}ul{list-style:none}button,input,select,textarea{margin:0}html{box-sizing:border-box}*,*::before,*::after{box-sizing:inherit}img,video{height:auto;max-width:100%}iframe{border:0}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}td:not([align]),th:not([align]){text-align:left}
-.testvuelidate{
+.login{
     img{
         width: 25%;
     }
@@ -59,31 +59,20 @@ data(){
     return{
         email:'',
         password:'',
-        biographie:'',
-        firstname:'',
-        lastname:0,
-        isAdmin:'',
-       
-        
-    }
+      }
     },
     methods:{
         loginForm(){
             let user={
                 email:this.email,
                 password:this.password,
-                biographie:this.biographie,
-                firstname:this.firstname,
-                lastname:this.lastname,
-                isAdmin:this.isAdmin,
-               
-          
-
-            }
+           
+                }
          axios.post('http://localhost:3000/api/auth/login',user)
          .then(res =>{
              console.log(res.config.data)
              sessionStorage.setItem('userConnected',res.config.data)
+               localStorage.setItem('userToken', res.data.token)
                 this.$router.push('/main')
                
          }, err =>{
