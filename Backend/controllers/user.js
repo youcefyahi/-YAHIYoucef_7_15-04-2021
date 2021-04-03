@@ -24,6 +24,7 @@ exports.signup = (req, res, next) => {
                     })
                     .catch(error => res.status(500).json({ error }))
                 )
+                .catch(error => res.status(500).json({ error }))
         });
 
 }
@@ -31,7 +32,7 @@ exports.signup = (req, res, next) => {
 // // CONTROLLER CONNEXION // // 
 
 exports.login = (req, res, next) => {
-    User.findOne({ email: req.body.email })
+    User.findOne({ where: { email: req.body.email } })
         .then(user => {
             if (!user) {
                 return res.status(401).json({ error: "Utilisateur non trouver" })
@@ -55,28 +56,19 @@ exports.login = (req, res, next) => {
 
 // // MODIFICATION DU PROFIL // // 
 exports.modifyUser = (req, res, next) => {
-    const userObject = req.file ? {
-        ...JSON.parse(req.body.user),
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-
-    } : {...req.body };
-    User.updateOne({ id: req['userId'] }, {...userObject, id: req['userId'] })
-
-    .then(() => res.status(200).json({ message: "profil mise a jour" }))
-        .catch(error => res.status(404).json({ error }));
-};
+    const userObject = {...req.body.user };
+    User.update(userObject, { where: { id: userObject.id } })
+        .then(() => res.status(200).json({ message: 'Compte modifié avec succès' }))
+        .catch(error => res.status(400).json({ error }));
+}; //
 
 
 // // RECUPERE UN USER // // 
 
 exports.getOneUser = (req, res, next) => {
-    User.findOne({
-            where: {
-                id: req.params.id
-            }
-        })
-        .then(user => res.status(200).json(user))
-        .catch(error => res.status(404).json({ error }));
+    User.findOne({ where: { id: req.params.id } })
+        .then(user => res.status(200).json({ user }))
+        .catch(error => res.status(400).json({ error }));
 };
 
 
@@ -84,24 +76,23 @@ exports.getOneUser = (req, res, next) => {
 // // SUPPRESSION D'UN USER // // 
 
 exports.deleteUser = (req, res, next) => {
-    User.findOne({ id: user.id })
+    User.findOne({ where: { id: req.params.id } })
         .then(user => {
-            const filename = post.imageUrl.split('/images/')[1];
-            fs.unlink(`images/${filename}`, () => {
-                User.deleteOne({ id: user.id })
-                    .then(() => res.status(201).json({ message: "Utillisatteur  supprimer" }))
-                    .catch(error => res.status(404).json({ error }))
-
-            });
-
-
+            if (!user) {
+                return res.status(404).json({ error: "Utilisateur non trouver" });
+            }
+            user.destroy({ where: { id: req.params.id } })
+                .then(() => res.status(200).json({ message: 'Utilisateur  supprimé !' }))
+                .catch(error => res.status(404).json({ error }));
         })
-}
+};
+
+
 
 // recuperer tou kles user 
 
 exports.getAllUser = (req, res, next) => {
-    User.find()
+    User.findAll()
         .then(users => res.status(200).json(users))
         .catch(error => res.status(404).json({ error }));
 };

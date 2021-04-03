@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const postRoutes = require('./routes/post');
 const userRoutes = require('./routes/user');
+const commentRoutes = require('./routes/comment');
 const path = require('path');
 
 const db = require('../Backend/config/database'); // IMPORTATION DE LA CONFI DE LA BASSE DE LA CONNEXION DE LA BASE DE DONNER 
@@ -51,6 +52,7 @@ app.use('images', express.static(path.join(__dirname, 'images')));
 
 app.use('/api/auth', userRoutes);
 app.use('/api/posts', postRoutes)
+app.use('/api/comments', commentRoutes)
     //app.get('/', (req, res) => res.send('TEST SERVER 3')); //TEST SERVER  3 // 
 
 module.exports = app;

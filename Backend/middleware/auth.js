@@ -7,6 +7,7 @@ module.exports = (req, res, next) => {
 
 
 
+
         const decodedToken = jwt.verify(token, 'RAMDOM_TOKEN_SECRET');
 
 
@@ -14,21 +15,19 @@ module.exports = (req, res, next) => {
 
 
         if (req.body.userId && req.body.userId !== userId) {
-            console.log("nique")
+            console.log("xwcx")
             throw 'User Id invalid';
         } else {
 
             req["userId"] = userId
             next();
         }
-    } catch {
-        console.log("nique")
-        res.status(401).json({
+    } catch (error) {
 
-            error: new Error()
 
-        });
+        console.log(error)
 
+        res.status(401).json({ error });
 
     }
 };

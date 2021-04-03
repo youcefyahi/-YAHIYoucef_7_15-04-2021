@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const sequelize = require('../config/database');
 const db = require('../config/database');
 
 
@@ -27,6 +28,10 @@ const Post = sequelize.define('Post', {
         type: Sequelize.INTEGER(11),
         allowNull: false
     },
+    signaled: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
+    }
 
 })
 

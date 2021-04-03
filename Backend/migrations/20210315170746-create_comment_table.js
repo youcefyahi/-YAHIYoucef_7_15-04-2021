@@ -1,34 +1,31 @@
-//MIGRATION DES POSTS
 'use strict';
+// // Migration  Commentaire // //
 module.exports = {
     up: async(queryInterface, Sequelize) => {
-        return queryInterface.createTable("posts", {
+        return queryInterface.createTable("comments", {
             id: {
                 type: Sequelize.INTEGER(11),
-                allowNull: false,
-                unique: true,
                 primaryKey: true,
-                autoIncrement: true
-            },
-            title: {
-                type: Sequelize.STRING,
+                autoIncrement: true,
+                unique: true,
                 allowNull: false
             },
             content: {
-                type: Sequelize.STRING,
-                allowNull: true,
-            },
-            imageUrl: {
-                type: Sequelize.STRING,
-                allowNull: true,
+                type: Sequelize.STRING(300),
+                allowNull: false
             },
             createdAt: {
-                type: Sequelize.DATE
+                type: Sequelize.DATE,
             },
+
             updatedAt: {
-                type: Sequelize.DATE
+                type: Sequelize.DATE,
             },
             userId: {
+                type: Sequelize.INTEGER(11),
+                allowNull: false
+            },
+            postId: {
                 type: Sequelize.INTEGER(11),
                 allowNull: false
             },
@@ -36,10 +33,16 @@ module.exports = {
                 type: Sequelize.BOOLEAN,
                 allowNull: false
             }
+
+
+
+
+
+
         })
     },
 
     down: async(queryInterface, Sequelize) => {
-        return queryInterface.dropTable('posts')
+        return queryInterface.dropTable('comments')
     }
 };

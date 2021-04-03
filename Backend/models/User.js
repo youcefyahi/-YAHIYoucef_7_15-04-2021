@@ -62,6 +62,10 @@ const User = sequelize.define('User', {
 
 
     },
+    profilImg: {
+        type: Sequelize.STRING,
+
+    },
 
     createdAt: {
         type: Sequelize.DATE,

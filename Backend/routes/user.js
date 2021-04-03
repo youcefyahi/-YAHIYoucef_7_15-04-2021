@@ -15,7 +15,7 @@ const db = require("../config/database")
 // // ROUTES TEST // // 
 router.post('/signup', userCtrl.signup); // Fonctionnalité d'inscription //Mot de passe de l'utilisatteur chifré  // // 
 router.post('/login', userCtrl.login); // Fonctionnalité de connexion //
-router.put('/', auth, userCtrl.modifyUser) // Modification du profil
+router.patch('/:id', auth, userCtrl.modifyUser) // Modification du profil
 router.get('/:id', auth, userCtrl.getOneUser)
 router.delete('/:id', auth, userCtrl.deleteUser)
 router.get('/', auth, userCtrl.getAllUser); // RENVOIE TOUS LES User

@@ -16,7 +16,7 @@ router.get('/:id', auth, postCtrl.getOnePost); // RENVOIE TOUS LES POSTS
 
 // // ROUTES PATCH // //
 
-router.patch('/:id', auth, multer, postCtrl.modifyPost) // MISE A JOUR DES POST
+router.patch('/:id', auth, postCtrl.modifyPost) // MISE A JOUR DES POST
 
 // // ROUTES DELETE // //
 
