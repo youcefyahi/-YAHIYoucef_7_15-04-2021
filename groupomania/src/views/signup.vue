@@ -100,14 +100,20 @@ export default {
             }
             console.log(newUser)
            axios.post('http://localhost:3000/api/auth/signup',newUser)
-            .then(res =>{
-                console.log(res.config.data)
-               sessionStorage.setItem('userConnected',res.config.data)
-             localStorage.setItem('userToken', res.data.token)
-                this.$router.push('/main')
-            }, err =>{
+            .then(response =>{
+              alert("ca marche");
+          let userInfo = JSON.stringify(response.data);
+          let userToken = JSON.stringify(response.data.token);
+          let userSession=  JSON.stringify(this.user)
+          sessionStorage.setItem("userInfo", userInfo);
+           sessionStorage.setItem("userSession", userSession);
+          localStorage.setItem("userToken", response.data.token);
+          console.log(userToken);
+        this.$router.push("/main")
+            })
+            .catch((err) =>{
                 console.log(err.response)
-            }) 
+            })
       
            
         },

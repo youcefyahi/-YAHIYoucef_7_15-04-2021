@@ -1,31 +1,23 @@
 <template>
   <div id="app">
-    <div id="nav">
-        <router-link to="/signup">signup.vue</router-link>|
-     
-      <router-link to="/about">About</router-link>|
-      <router-link to="/testApi">testApi</router-link>|
-       <router-link to="/main">Main</router-link>|
-       <router-link to="/profil">profil</router-link>|
-       <router-link to="/login">login</router-link>|
-        <router-link to="/addPost">addPost</router-link>|
     
-       
-       
-    </div>
-
-  
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <style lang="scss">
+
+/*! minireset.css v0.0.6 | MIT License | github.com/jgthms/minireset.css */html,body,p,ol,ul,li,dl,dt,dd,blockquote,figure,fieldset,legend,textarea,pre,iframe,hr,h1,h2,h3,h4,h5,h6{margin:0;padding:0}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}ul{list-style:none}button,input,select,textarea{margin:0}html{box-sizing:border-box}*,*::before,*::after{box-sizing:inherit}img,video{height:auto;max-width:100%}iframe{border:0}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}td:not([align]),th:not([align]){text-align:left}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Kanit", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  h1{
+    font-size: 25px;
+    font-weight: bold;
+  }
 }
 
 #nav {

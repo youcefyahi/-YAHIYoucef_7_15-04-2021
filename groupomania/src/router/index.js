@@ -7,16 +7,16 @@ Vue.use(VueRouter)
 const routes = [
 
 
-
     {
-        path: '/about',
-        name: 'About',
+        path: '/login',
+        name: 'login',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/About.vue')
+            import ( /* webpackChunkName: "about" */ '../views/login.vue')
     },
+
     {
         path: '/testApi',
         name: 'testApi',
@@ -53,15 +53,7 @@ const routes = [
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/signup.vue')
     },
-    {
-        path: '/login',
-        name: 'login',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/login.vue')
-    },
+
     {
         path: '/addPost',
         name: 'addPost',
@@ -80,6 +72,26 @@ const routes = [
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/post.vue')
     },
+    {
+        path: '/postModify',
+        name: 'postModify',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/postModify.vue')
+    },
+
+    {
+        path: '/backOffice',
+        name: 'backOffice',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/backOffice.vue')
+    },
+
 
 
 
