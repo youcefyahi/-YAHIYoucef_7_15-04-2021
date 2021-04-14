@@ -96,3 +96,10 @@ exports.getAllUser = (req, res, next) => {
         .then(users => res.status(200).json(users))
         .catch(error => res.status(404).json({ error }));
 };
+
+
+exports.getAllUserAdmin = (req, res, next) => {
+    User.findAll({ where: { isAdmin: true } })
+        .then(users => res.status(200).json(users))
+        .catch(error => res.status(404).json({ error }));
+};

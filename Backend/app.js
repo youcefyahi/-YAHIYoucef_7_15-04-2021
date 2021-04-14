@@ -38,7 +38,7 @@ app.use((req, res, next) => {
     next();
 });
 
-//app.get('/', (req, res) => res.send('TEST SERVER 2'));//TEST SERVER  2 // 
+
 
 
 // // CORS PACKAGE // // 
@@ -46,13 +46,12 @@ app.use((req, res, next) => {
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());
-
-app.use('images', express.static(path.join(__dirname, 'images')));
+app.use('/upload', express.static(path.join(__dirname, 'upload')));
 
 
 app.use('/api/auth', userRoutes);
 app.use('/api/posts', postRoutes)
 app.use('/api/comments', commentRoutes)
-    //app.get('/', (req, res) => res.send('TEST SERVER 3')); //TEST SERVER  3 // 
+
 
 module.exports = app;

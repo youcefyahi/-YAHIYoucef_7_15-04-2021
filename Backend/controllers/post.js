@@ -12,10 +12,15 @@ exports.createPost = (req, res, next) => {
     const post = new Post({
         ...postObject,
         userId: req["userId"],
-        signaled: false
+        signaled: false,
+
+
 
 
     });
+
+
+
 
     post.save()
         .then(() => res.status(201).json({ mesage: "post enregistré" }))
@@ -67,4 +72,15 @@ exports.getAllPost = (req, res, next) => {
     Post.findAll()
         .then(posts => res.status(200).json(posts))
         .catch(error => res.status(404).json({ error }));
+};
+
+
+// // RECUPERATION DE TOUT  POST SIGNALED // //
+exports.getAllSignaledPost = (req, res, next) => {
+
+    Post.findAll({ where: { signaled: true } })
+        .then(posts => {
+            res.status(200).json(posts);
+        })
+        .catch(error => res.status(500).json({ error }));
 };

@@ -24,7 +24,17 @@ const Comment = sequelize.define('Comment', {
     signaled: {
         type: Sequelize.BOOLEAN,
         allowNull: false
-    }
+    },
+    username: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        unique: true,
+
+    },
+    profilImg: {
+        type: Sequelize.STRING,
+
+    },
 
 
 

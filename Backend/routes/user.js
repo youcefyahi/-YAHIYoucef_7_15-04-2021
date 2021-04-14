@@ -20,4 +20,6 @@ router.get('/:id', auth, userCtrl.getOneUser)
 router.delete('/:id', auth, userCtrl.deleteUser)
 router.get('/', auth, userCtrl.getAllUser); // RENVOIE TOUS LES User
 
+router.get('/isAdmin/:true', auth, userCtrl.getAllUserAdmin); // RECUPERER TOUS LES ADMIN 
+
 module.exports = router;

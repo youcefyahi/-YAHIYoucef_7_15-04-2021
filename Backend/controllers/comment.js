@@ -11,8 +11,9 @@ exports.createComment = (req, res, next) => {
     const comment = new Comment({
         ...commentObject,
         userId: req["userId"],
-        PostId: req.params.id,
-        signaled: false
+        PostId: req.params.postId,
+        signaled: false,
+
 
 
     });
@@ -88,4 +89,29 @@ exports.modifyComment = (req, res, next) => {
     Comment.update(commentObject, { where: { id: commentObject.id } })
         .then(() => res.status(200).json({ message: 'commentaire modifié avec succès' }))
         .catch(error => res.status(400).json({ error }));
+};
+
+// // RECUPERE TOUS LES COMMENTAIRE LIER AU POST // //
+
+
+exports.getAllCommentByPostId = (req, res, next) => {
+
+    Comment.findAll({ where: { postId: req.params.postId, } })
+        .then(comments => {
+            res.status(200).json(comments);
+        })
+        .catch(error => res.status(500).json({ error }));
+};
+
+
+
+// // RECUPERE TOUS LES COMMENTAIRE SIGNALER // //
+
+exports.getAllCommentSignaled = (req, res, next) => {
+
+    Comment.findAll({ where: { signaled: true } })
+        .then(comments => {
+            res.status(200).json(comments);
+        })
+        .catch(error => res.status(500).json({ error }));
 };

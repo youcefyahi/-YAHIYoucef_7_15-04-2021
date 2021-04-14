@@ -31,7 +31,18 @@ const Post = sequelize.define('Post', {
     signaled: {
         type: Sequelize.BOOLEAN,
         allowNull: false
-    }
+    },
+    username: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        unique: true,
+
+    },
+    profilImg: {
+        type: Sequelize.STRING,
+
+    },
+
 
 })
 

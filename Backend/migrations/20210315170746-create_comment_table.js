@@ -32,7 +32,19 @@ module.exports = {
             signaled: {
                 type: Sequelize.BOOLEAN,
                 allowNull: false
-            }
+            },
+
+            profilImg: {
+                type: Sequelize.STRING,
+
+            },
+            username: {
+                type: Sequelize.STRING,
+                allowNull: true,
+                unique: true,
+
+
+            },
 
 
 

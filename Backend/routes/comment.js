@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const commentCtrl = require('../controllers/comment');
 const auth = require("../middleware/auth")
-const multer = require("../middleware/multer-config")
+
 const db = require("../config/database")
 
-router.post('/', auth, multer, commentCtrl.createComment) // Création de post
+router.post('/', auth, commentCtrl.createComment) // Création de post
 
 // // LES ROUTE GET // //
 
@@ -25,7 +25,8 @@ router.delete('/:id', auth, commentCtrl.deleteComment) // SUPPRISION DE comment
 
 router.patch('/:id', auth, commentCtrl.modifyComment) // MISE A JOUR DES POST
 
+router.get('/commentPost/:postId', auth, commentCtrl.getAllCommentByPostId);
 
-
+router.get('/signaled/:true', auth, commentCtrl.getAllCommentSignaled);
 
 module.exports = router;
