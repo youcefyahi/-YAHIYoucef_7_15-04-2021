@@ -18,6 +18,14 @@
     font-size: 25px;
     font-weight: bold;
   }
+  h2{
+    font-size: 21px;
+    font-weight: bold;
+  }
+  h3{
+     font-size: 19px;
+    font-weight: bold;
+  }
 }
 
 #nav {
@@ -33,4 +41,7 @@
   }
 }
 </style>
+
+<script>
+</script>
 

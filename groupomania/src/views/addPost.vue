@@ -10,6 +10,9 @@
     <form @submit.prevent="createPost">
       <label>TITRE (obligatoire)</label><br />
       <input type="text" v-model="title" /><br />
+      <span v-if="!$v.title.required && $v.title.$dirty"
+        >Veuillez indiquer un titre a votre Article</span
+      ><br />
       <label>Text</label><br />
       <input type="text" v-model="content" /><br />
       <label>Image a uploader</label><br />
@@ -22,6 +25,7 @@
 <style lang="scss"></style>
 
 <script>
+import { required, minLength } from "vuelidate/lib/validators";
 import axios from "axios";
 export default {
   name: "assPost",
@@ -32,37 +36,68 @@ export default {
       imageUrl: "",
     };
   },
+
+  validations: {
+    title: { required, minLength: minLength(5) },
+  },
   methods: {
     createPost() {
-      let newPost = {
-        title: this.title,
-        content: this.content,
-        imageUrl: this.imageUrl,
-      };
-      console.log(localStorage.getItem("userToken"));
+      this.$v.$touch();
+      if (!this.$v.$invalid) {
+        let newPost = {
+          title: this.title,
+          content: this.content,
+          imageUrl: this.imageUrl,
+          username: this.userData.username,
+          profilImg: this.userData.profilImg,
+        };
+        console.log(localStorage.getItem("userToken"));
+
+        axios
+          .post(
+            "http://localhost:3000/api/posts",
+            { post: JSON.stringify(newPost) },
+            {
+              headers: {
+                authorization: "Bearer " + localStorage.getItem("userToken"),
+              },
+            }
+          )
+          .then(
+            (res) => {
+              console.log(res.config.data);
+              alert("post crée");
+
+              this.$router.push("/main");
+            },
+            (err) => {
+              console.log(err.response);
+            }
+          );
+      }
+    },
+
+    getData() {
+      let id = JSON.parse(sessionStorage.getItem("userInfo")).userId;
 
       axios
-        .post(
-          "http://localhost:3000/api/posts",
-          { post: JSON.stringify(newPost) },
-          {
-            headers: {
-              authorization: "Bearer " + localStorage.getItem("userToken"),
-            },
-          }
-        )
-        .then(
-          (res) => {
-            console.log("truc");
-            console.log(res.config.data);
-            alert("post crée");
-            this.$router.push("/main");
+        .get("http://localhost:3000/api/auth/" + id, {
+          headers: {
+            authorization: "Bearer " + localStorage.getItem("userToken"),
           },
-          (err) => {
-            console.log(err.response);
-          }
-        );
+        })
+        .then((response) => {
+          console.log(response.data.user);
+          this.userData = response.data.user;
+          console.log(this.userData.profilImg);
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
     },
+  },
+  mounted() {
+    this.getData();
   },
 };
 </script>
@@ -116,6 +151,20 @@ export default {
       &:hover {
         transform: scale(1.2);
         box-shadow: 5px 15px 5px rgb(34, 53, 83);
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 425px) {
+  .addPost {
+    form {
+      button {
+        transition: transform none;
+        &:hover {
+          transform: none;
+          box-shadow: none;
+        }
       }
     }
   }

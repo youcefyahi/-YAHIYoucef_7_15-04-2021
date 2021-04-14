@@ -3,127 +3,103 @@
     <img src="../assets/icon-above-font.png" alt="Logo groupomania" />
     <form @submit.prevent="login">
       <label>Votre email</label><br />
-      <input type="email" v-model="user.email" /><br />
+      <input type="email" v-model="email" /><br />
+        <span v-if="(!$v.email.required || !$v.email.email) && $v.email.$dirty"
+        >email nécessaire<br>
+      </span>
       <label>Votre mot de passe</label><br />
-      <input type="password" v-model="user.password" /><br />
-      <button>Connexion</button>
+      <input type="password" v-model="password" /><br />
+       <span v-if="!$v.password.required && $v.password.$dirty"
+        >mot de passe nécessaire</span><br>
+     <input id="submitButton" value="Ce connecter" type="submit" />
     </form>
+    <div id="goToSignup"><p>Votre premiére fois sur Groupomania? n'hésitait pas a nous rejoindre ici</p><a href=signup>Inscription</a> </div>
   </div>
 </template>
 
 <script>
-//import { required,email } from 'vuelidate/lib/validators'
+import { required,email } from 'vuelidate/lib/validators'
+
+
 import axios from "axios";
 export default {
   name: "login",
   data() {
     return {
-      user: { email: "", password: "" },
+email:"",
+password:""
     };
   },
+
+  validations:{
+    email:{
+      required,
+      email
+    },
+    password:{
+      required
+    }
+  },
+
   methods: {
     login() {
-      axios
-        .post("http://localhost:3000/api/auth/login", this.user, {})
+      this.$v.$touch();
+      if(!this.$v.$invalid){
+        let user ={
+          email:this.email,
+          password:this.password
+        }
+        axios
+        .post("http://localhost:3000/api/auth/login", user, {})
         .then((response) => {
           alert("ca marche");
           let userInfo = JSON.stringify(response.data);
           let userToken = JSON.stringify(response.data.token);
-          let userSession=  JSON.stringify(this.user)
+          
           sessionStorage.setItem("userInfo", userInfo);
-           sessionStorage.setItem("userSession", userSession);
+         
+
           localStorage.setItem("userToken", response.data.token);
           console.log(userToken);
-          alert(userSession);
+
+          // recupp rinfo // // 
+  let id = JSON.parse(sessionStorage.getItem("userInfo")).userId;
+
+      axios
+        .get("http://localhost:3000/api/auth/" + id, {
+          headers: {
+            authorization: "Bearer " + localStorage.getItem("userToken"),
+          },
+        })
+        .then((res) => {
+        console.log(res)
+        let userSession = JSON.stringify(res.data)
+        sessionStorage.setItem("userSession",userSession)
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+
+      
           this.$router.push("/main");
         })
         .catch((error) => {
           alert(error);
         });
+      }
+      
     },
 
-    truc() {
-      console.log("truc");
-    },
+ 
+
+  
   },
 };
 </script>
 
 <style lang="scss">
 body {
-  /*! minireset.css v0.0.6 | MIT License | github.com/jgthms/minireset.css */
-  html,
-  body,
-  p,
-  ol,
-  ul,
-  li,
-  dl,
-  dt,
-  dd,
-  blockquote,
-  figure,
-  fieldset,
-  legend,
-  textarea,
-  pre,
-  iframe,
-  hr,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin: 0;
-    padding: 0;
-  }
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-size: 100%;
-    font-weight: normal;
-  }
-  ul {
-    list-style: none;
-  }
-  button,
-  input,
-  select,
-  textarea {
-    margin: 0;
-  }
-  html {
-    box-sizing: border-box;
-  }
-  *,
-  *::before,
-  *::after {
-    box-sizing: inherit;
-  }
-  img,
-  video {
-    height: auto;
-    max-width: 100%;
-  }
-  iframe {
-    border: 0;
-  }
-  table {
-    border-collapse: collapse;
-    border-spacing: 0;
-  }
-  td,
-  th {
-    padding: 0;
-  }
-  td:not([align]),
-  th:not([align]) {
-    text-align: left;
-  }
+ 
   .login {
     img {
       width: 25%;
