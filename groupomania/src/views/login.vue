@@ -74,7 +74,7 @@ password:""
         .then((res) => {
         console.log(res)
         let userSession = JSON.stringify(res.data)
-        sessionStorage.setItem("userSession",userSession)
+        localStorage.setItem("userSession",userSession)
         })
         .catch((error) => {
           console.log(error.response);

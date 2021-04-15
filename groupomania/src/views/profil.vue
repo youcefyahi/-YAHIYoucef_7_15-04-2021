@@ -150,7 +150,7 @@ export default {
     },
 
     sessionData() {
-      this.sessionData = JSON.parse(sessionStorage.getItem("userSession")).user;
+      this.sessionData = JSON.parse(localStorage.getItem("userSession")).user;
       console.warn(this.sessionData.id);
     },
     defineAsAdmin() {

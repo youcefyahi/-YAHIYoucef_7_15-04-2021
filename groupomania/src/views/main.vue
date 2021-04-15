@@ -239,9 +239,9 @@ body {
 
             transition: transform 400ms;
             width: 700px;
-            height: 450px;
+            height: 500px;
             max-width: 700px;
-            max-height: 450px;
+            max-height: 500px;
             &:hover {
               transform: scale(1.1);
               border-top: 3px solid black;
