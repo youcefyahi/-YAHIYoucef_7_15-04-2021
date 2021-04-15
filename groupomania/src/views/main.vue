@@ -11,6 +11,7 @@
         <a href="addPost">Crée un post</a>
         <a v-bind:href="'profil?id=' + this.userData.id"
           ><img
+          v-if="this.userData.profilImg"
             v-bind:src="this.userData.profilImg"
             id="imgProfil"
             alt="logo groupania"
